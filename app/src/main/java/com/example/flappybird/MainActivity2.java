@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class MainActivity2 extends AppCompatActivity {
 
     TextView tv3;
-    Button button2, button3, button4;
+    Button button2, button3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,4 +26,5 @@ public class MainActivity2 extends AppCompatActivity {
         Intent versAutreActivite3 = new Intent(MainActivity2.this,MainActivity3.class);
         startActivity(versAutreActivite3);
     }
+
 }
