@@ -9,19 +9,19 @@
 
     <TextView
         android:id="@+id/textFinal"
-        android:layout_width="71dp"
-        android:layout_height="45dp"
+        android:layout_width="344dp"
+        android:layout_height="108dp"
         android:outlineAmbientShadowColor="#F30B0B"
-        android:text="Hii !"
+        android:text="Ouups ! Vous avez touché l'obstacle"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.161" />
+        app:layout_constraintVertical_bias="0.293" />
 
     <Button
         android:id="@+id/button4"
@@ -29,26 +29,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="127dp"
         android:layout_marginEnd="128dp"
-        android:layout_marginBottom="145dp"
-        android:text="Click to start"
+        android:layout_marginBottom="268dp"
+        android:onClick="retournerVersJeu"
+        android:text="New Game !!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/input1"
+    <Button
+        android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="106dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginBottom="218dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:hint="Entrer votre nom"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        android:textColorHint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        android:layout_marginStart="157dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="182dp"
+        android:onClick="done"
+        android:text="Exit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

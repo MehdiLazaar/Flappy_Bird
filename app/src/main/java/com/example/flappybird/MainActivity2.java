@@ -22,7 +22,7 @@ public class MainActivity2 extends AppCompatActivity {
         String name = getIntent().getStringExtra("mon_nom");
         tv3.setText("Bienvenue " + name);
     }
-    public void pp(View view) {
+    public void jeu(View view) {
         Intent versAutreActivite3 = new Intent(MainActivity2.this,MainActivity3.class);
         startActivity(versAutreActivite3);
     }
