@@ -26,5 +26,8 @@ public class MainActivity2 extends AppCompatActivity {
         Intent versAutreActivite3 = new Intent(MainActivity2.this,MainActivity3.class);
         startActivity(versAutreActivite3);
     }
+    public void done(View view){
+        finish();
+    }
 
 }

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity4 extends AppCompatActivity {
-    private Button button4, button5;
+    private Button button4;
     private TextView textFinal;
 
     @Override
@@ -18,7 +18,6 @@ public class MainActivity4 extends AppCompatActivity {
         setContentView(R.layout.activity_main4);
 
         button4 = findViewById(R.id.button4);
-        button5 = findViewById(R.id.button5);
         textFinal = findViewById(R.id.textFinal);
         //Récupération du score envoyé par le intent de l activité précédente.
         int timer = getIntent().getIntExtra("timer", 0);
@@ -30,8 +29,5 @@ public class MainActivity4 extends AppCompatActivity {
     public void retournerVersJeu(View view) {
         Intent jeu = new Intent(MainActivity4.this,MainActivity3.class);
         startActivity(jeu);
-    }
-    public void done(View view){
-        finish();
     }
 }
