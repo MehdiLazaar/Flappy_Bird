@@ -22,7 +22,7 @@ public class MainActivity4 extends AppCompatActivity {
         //Récupération du score envoyé par le intent de l activité précédente.
         int timer = getIntent().getIntExtra("timer", 0);
         //Affichage du score
-        textFinal.setText("Ouups ! Vous étiez tres proche de l'obstacle.Votre score est de : " + timer + "s");
+        textFinal.setText("Ouups! C'est terminé.Votre score est de : " + timer + "s");
 
     }
 
