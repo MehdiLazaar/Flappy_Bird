@@ -40,17 +40,14 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
     //L'image du oiseau.
     ImageView im1, obsIm1,obsIm2;
     TextView tv4;
-    float obstacleSpeed = 0.02f; // Vitesse des obstacles
-    float toucherEcran;
-    float distanceParcourus = 30f;
     private DisplayMetrics displayMetrics = new DisplayMetrics();
     Random r = new Random();
     int obstacleHeight; // La hauteur des obstacles (constante)
     int obstacleWidth; // La largeur des obstacles (constante)
     int largeurEcran, hauteurEcran;
-
-    protected ObjectAnimator anim1, anim2;
-    int score = 0;
+    float toucherEcranX, toucherEcranY;
+    int amplitude = 40;
+    float frq = (2f / 3f);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +57,6 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
         obsIm1 = findViewById(R.id.obsIm1);
         obsIm2 = findViewById(R.id.obsIm2);
         tv4 = findViewById(R.id.tv4);
-
-        Rect rectOiseau = new Rect();
-        Rect premierObsIm1 = new Rect();
-        Rect deuxiemeObsIm2 = new Rect();
 
         // récupère la taille de l'écran (La hauteur et la largeur)
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -77,182 +70,52 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
 
         demarrerAnimations();
     }
-
-    /*private void placerObstacles() {
-        int obs1Y = 0; // Position de l'obstacle supérieur en Y
-        int gap = 200;
-        int obs2Y = obs1Y + obsIm1.getHeight() + gap; // Position de l'obstacle inférieur en Y
-
-        //Durée d'animation
-        int dureeAnimation = 4000;
-
-        // Positionner les obstacles
-        obsIm1.setY(obs1Y);
-        obsIm1.setX(largeurEcran);
-
-        obsIm2.setY(obs2Y);
-        obsIm2.setX(largeurEcran);
-        boolean collisionChecked = false; // Variable pour empêcher la vérification de collision multiple
-
-        // Faire bouger les obstacles de la droite vers la gauche en mouvement sinusoïdal
-        ObjectAnimator anim1 = ObjectAnimator.ofFloat(obsIm1, "translationX", -largeurEcran);
-        anim1.setDuration(dureeAnimation);
-        anim1.setRepeatCount(ValueAnimator.INFINITE);
-        anim1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float time = (float) animation.getCurrentPlayTime() / 1000f;
-                float angle = (float) (time * Math.PI * 2f / 3f);
-                float yOffset = (float) (Math.sin(angle) * 40); // Déplacement vertical de l'obstacle supérieur
-                obsIm1.setY(obs1Y + yOffset);
-                if(!collisionChecked && verifierCollisions()){
-                    Intent terminer = new Intent(MainActivity3.this,MainActivity4.class);
-                    terminer.putExtra("score", score);
-                    startActivity(terminer);
-                } else {
-                    score++;
-                    tv4.setText("Score : " + score);
-                    anim1.setDuration(dureeAnimation - 100);
-                }
-            }
-        });
-        anim1.start();
-
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(obsIm2, "translationX", -largeurEcran);
-        anim2.setDuration(4000);
-        anim2.setRepeatCount(ValueAnimator.INFINITE);
-        anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            // Réinitialiser la variable collisionChecked pour la deuxième animation
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                boolean collisionChecked = false;
-                float time = (float) animation.getCurrentPlayTime() / 1000f;
-                float angle = (float) (time * Math.PI * 2f / 3f);
-                float yOffset = (float) (Math.sin(angle) * 40); // Déplacement vertical de l'obstacle inférieur
-                obsIm2.setY(obs2Y + yOffset);
-                if(!collisionChecked && verifierCollisions()){
-                    Intent terminer = new Intent(MainActivity3.this,MainActivity4.class);
-                    terminer.putExtra("score", score);
-                    startActivity(terminer);
-                } else {
-                    score++;
-                    tv4.setText("Score : " + score);
-                    anim2.setDuration(dureeAnimation - 100);
-                }
-            }
-        });
-        anim2.start();
-    }*/
-    /*private void placerObstacles() {
-        int obs1Y = 0; // Position de l'obstacle supérieur en Y
-        int gap = 380;
-        int obs2Y = obs1Y + obsIm1.getHeight() + gap; // Position de l'obstacle inférieur en Y
-
-        //Durée d'animation
-        int dureeAnimation = 4000;
-
-        // Positionner les obstacles
-        obsIm1.setY(obs1Y);
-        obsIm1.setX(largeurEcran);
-
-        obsIm2.setY(obs2Y);
-        obsIm2.setX(largeurEcran);
-
-        // Faire bouger les obstacles de la droite vers la gauche en mouvement sinusoïdal
-        ObjectAnimator anim1 = ObjectAnimator.ofFloat(obsIm1, "translationX", -largeurEcran);
-        anim1.setDuration(dureeAnimation);
-        anim1.setRepeatCount(ValueAnimator.INFINITE);
-        anim1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            boolean isScoreIncremented = false;
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float time = (float) animation.getCurrentPlayTime() / 1000f;
-                float angle = (float) (time * Math.PI * 2f / 3f);
-                float yOffset = (float) (Math.sin(angle) * 40); // Déplacement vertical de l'obstacle supérieur
-                obsIm1.setY(obs1Y + yOffset);
-
-                if (verifierCollisions() == true) {
-                    Intent terminer = new Intent(MainActivity3.this, MainActivity4.class);
-                    terminer.putExtra("score", score);
-                    startActivity(terminer);
-                } else {
-                    if (!isScoreIncremented && obsIm1.getX() < im1.getX()) {
-                        isScoreIncremented = true;
-                        score++;
-                        tv4.setText("Score : " + score);
-                        isScoreIncremented = false;
-                    }
-                    anim1.setDuration(dureeAnimation - 100);
-                }
-            }
-        });
-        anim1.start();
-
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(obsIm2, "translationX", -largeurEcran);
-        anim2.setDuration(4000);
-        anim2.setRepeatCount(ValueAnimator.INFINITE);
-        anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            boolean isScoreIncremented = false;
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float time = (float) animation.getCurrentPlayTime() / 1000f;
-                float angle = (float) (time * Math.PI * 2f / 3f);
-                float yOffset = (float) (Math.sin(angle) * 40); // Déplacement vertical de l'obstacle inférieur
-                obsIm2.setY(obs2Y + yOffset);
-
-                if (verifierCollisions() == true) {
-                    Intent terminer = new Intent(MainActivity3.this, MainActivity4.class);
-                    terminer.putExtra("score", score);
-                    startActivity(terminer);
-                } else {
-                    if (!isScoreIncremented && obsIm2.getX() < im1.getX()) {
-                        isScoreIncremented = true;
-                        score++;
-                        tv4.setText("Score : " + score);
-                        isScoreIncremented = false;
-                    }
-                    anim2.setDuration(dureeAnimation - 100);
-                }
-            }
-        });
-        anim2.start();
-    }*/
-
     private void placerObstacles() {
-        int obs1Y = 0; // Position de l'obstacle supérieur en Y
-        int gap = 380;
-        int obs2Y = obs1Y + obsIm1.getHeight() + gap; // Position de l'obstacle inférieur en Y
+        //Position de l'obstacle supérieur en Y
+        int obs1SupPosY = 0;
+        int gapEntreObstacles = 380;
+        // Position de l'obstacle inférieur en Y
+        int obs2InfPosY = obs1SupPosY + obsIm1.getHeight() + gapEntreObstacles;
 
         // Durée d'animation
         int dureeAnimation = 4000;
         // Durée du timer
-        int dureeTimer = 30; // En secondes
+        int dureeTimer = 5000; // En secondes
 
         // Positionner les obstacles
-        obsIm1.setY(obs1Y);
+        obsIm1.setY(obs1SupPosY);
         obsIm1.setX(largeurEcran);
 
-        obsIm2.setY(obs2Y);
+        obsIm2.setY(obs2InfPosY);
         obsIm2.setX(largeurEcran);
 
-        // Faire bouger les obstacles de la droite vers la gauche en mouvement sinusoïdal
-        ObjectAnimator anim1 = ObjectAnimator.ofFloat(obsIm1, "translationX", -largeurEcran);
-        anim1.setDuration(dureeAnimation);
-        anim1.setRepeatCount(ValueAnimator.INFINITE);
-        anim1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        //On bouge les obstacles de la droite vers la gauche avec un mouvement sinusoïdal
+        //On aura besoin d'une amplitude et une frequence
+        //Avec l'objet premieraAnimation on fait bouger l'obstacle superieur de la droite vers la gauche avec une translationX c-a-d sur l axe X
+        //Jusqu'a la postion (-largeurEcran) qui est l autre cote de l'écran.
+        ObjectAnimator premieraAnimation = ObjectAnimator.ofFloat(obsIm1, "translationX", -largeurEcran);
+        premieraAnimation.setDuration(dureeAnimation);
+        premieraAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        //Le updatListener sera appelé chaque fois que l'animation mise à jour
+        premieraAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             boolean isTimerStarted = false;
             int timer = 0;
+            Random nbrAlea1 = new Random();
+            //Pour avoir un nombre aleatoire en -400 et 699
+            int accelereAnimation = nbrAlea1.nextInt(1100) - 400;
 
+            //Le onAnimationUpdate sera utilisé pour mettre a jour la position de l'obstacle superieur sur l'axe Y
+            //Amplitude = 40
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float time = (float) animation.getCurrentPlayTime() / 1000f;
-                float angle = (float) (time * Math.PI * 2f / 3f);
-                float yOffset = (float) (Math.sin(angle) * 40); // Déplacement vertical de l'obstacle supérieur
-                obsIm1.setY(obs1Y + yOffset);
+                float angle = (float) (time * Math.PI * frq);
+                // Déplacement vertical de l'obstacle supérieur
+                float depVerticalObsSup = (float) (Math.sin(angle) * amplitude);
+                //Apres ce calcule, on aura un deplacement de -40 à 40 pixels
+                obsIm1.setY(obs1SupPosY + depVerticalObsSup);
 
-                if (verifierCollisions() == true) {
+                if (verifierIntersectionObstacleOiseau() == true) {
                     Intent terminer = new Intent(MainActivity3.this, MainActivity4.class);
                     terminer.putExtra("timer", timer);
                     startActivity(terminer);
@@ -273,11 +136,11 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
                             }
                         }.start();
                     }
-                    anim1.setDuration(dureeAnimation - 100);
+                    premieraAnimation.setDuration(dureeAnimation - accelereAnimation);
                 }
             }
         });
-        anim1.start();
+        premieraAnimation.start();
 
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(obsIm2, "translationX", -largeurEcran);
         anim2.setDuration(dureeAnimation);
@@ -285,15 +148,19 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
         anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             boolean isTimerStarted = false;
             int timer = 0;
-
+            Random nbrAlea2 = new Random();
+            //Pour avoir un nombre aleatoire en -500 et 499
+            int accelereAnimation2 = nbrAlea2.nextInt(1000) - 500;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float time = (float) animation.getCurrentPlayTime() / 1000f;
-                float angle = (float) (time * Math.PI * 2f / 3f);
-                float yOffset = (float) (Math.sin(angle) * 40); // Déplacement vertical de l'obstacle inférieur
-                obsIm2.setY(obs2Y + yOffset);
+                float angle = (float) (time * Math.PI * frq);
+                // Déplacement vertical de l'obstacle inférieur
+                float depVerticalObsInf = (float) (Math.sin(angle) * amplitude);
+                //Apres ce calcule, on aura un deplacement de -40 à 40 pixels
+                obsIm2.setY(obs2InfPosY + depVerticalObsInf);
 
-                if (verifierCollisions() == true) {
+                if (verifierIntersectionObstacleOiseau() == true) {
                     Intent terminer = new Intent(MainActivity3.this, MainActivity4.class);
                     terminer.putExtra("timer", timer);
                     startActivity(terminer);
@@ -314,7 +181,7 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
                             }
                         }.start();
                     }
-                    anim2.setDuration(dureeAnimation - 100);
+                    anim2.setDuration(dureeAnimation - accelereAnimation2);
                 }
             }
         });
@@ -323,7 +190,7 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
     public void demarrerAnimations() {
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(obsIm1, "translationX", -obstacleWidth);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(obsIm2, "translationX", -obstacleWidth);
-        // Ecouteur d'animation pour l'obstacle supérieur
+        // Listener pour l obstacle du top
         anim1.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -331,64 +198,32 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
             }
         });
 
-        // Ecouteur d'animation pour l'obstacle inférieur
+        // Listener pour l obstacle inferieur
         anim2.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                // Ne rien faire ici car l'écouteur de l'obstacle supérieur prendra le relais
+                //Le Listener de l'écouteur superieur prend le relais
             }
         });
-
-        // Démarrer les animations
+        //Demarrer les animations
         anim1.start();
         anim2.start();
     }
-    public boolean verifierCollisions() {
-        //Rect rectOiseau = new Rect((int) im1.getX(), (int) im1.getY(), (int) (im1.getX() + im1.getWidth()), (int) (im1.getY() + im1.getHeight()));
-
-        //Rect rectObstacle1 = new Rect((int) obsIm1.getX(), (int) obsIm1.getY(), (int) (obsIm1.getX() + obsIm1.getWidth()), (int) (obsIm1.getY() + obsIm1.getHeight()));
-
-        //Rect rectObstacle2 = new Rect((int) obsIm2.getX(), (int) obsIm2.getY(), (int) (obsIm2.getX() + obsIm2.getWidth()), (int) (obsIm2.getY() + obsIm2.getHeight()));
-
-        if (collision(obsIm1)||collision(obsIm2)) {
+    public boolean verifierIntersectionObstacleOiseau() {
+        if (intersectionObsOiseau(obsIm1)||intersectionObsOiseau(obsIm2)) {
             return true;
         }
         return false;
     }
-    public boolean collision(ImageView obs){
-        Rect oiseauRect = new Rect();
-        Rect obstacleRect = new Rect();
-        im1.getHitRect(oiseauRect);
-        obs.getHitRect(obstacleRect);
-        return Rect.intersects(oiseauRect,obstacleRect);
+    public boolean intersectionObsOiseau(ImageView obs){
+        //Rect = rectangle
+        Rect oiseauIm = new Rect();
+        Rect obstacleIm = new Rect();
+        im1.getHitRect(oiseauIm);
+        obs.getHitRect(obstacleIm);
+        return Rect.intersects(oiseauIm,obstacleIm);
     }
-    public void afficherGameOver() {
-        // Créer une AlertDialog avec un message Game Over
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Game Over!")
-                .setCancelable(false)
-                .setPositiveButton("Nouvelle partie", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss(); // Fermer la fenêtre Game Over
-                        resetJeu(); // Réinitialiser le jeu
-                    }
-                })
-                .setNegativeButton("Quitter", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish(); // Quitter l'application
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-    private void resetJeu() {
-        // Réinitialiser la position des obstacles et de l'oiseau
-        placerObstacles();
-        im1.setTranslationY(0);
-        // Redémarrer les animations
-        demarrerAnimations();
-    }
-
+/*
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
@@ -406,5 +241,46 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
                 }
         }
         return super.onTouchEvent(event);
+    }*/
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //Lorsqu'on touche l'écran, on stocke les informations de la position de notre doigt
+                toucherEcranX = x;
+                toucherEcranY = y;
+            case MotionEvent.ACTION_MOVE:
+                //On calcule la distance parcourue depuis la position de notre dernier touché
+                float distanceX = x - toucherEcranX;
+                float distanceY = y - toucherEcranY;
+
+                //L'oiseau se déplace en prenant en compte la direction de glissement du doigt
+                if (Math.abs(distanceX) > Math.abs(distanceY)) {
+                    if (distanceX > 0) {
+                        //L'oiseau glisse vers la droite
+                        im1.setX(im1.getX() + 10);
+                    } else {
+                        //L'oiseau glisse vers la gauche
+                        im1.setX(im1.getX() - 10);
+                    }
+                } else {
+                    if (distanceY < 0) {
+                        //L'oiseau saute vers le haut
+                        im1.setY(im1.getY() - 10);
+                    } else {
+                        //L'oiseau saute vers le bas
+                        im1.setY(im1.getY() + 10);
+                    }
+                }
+                //Mise à jour de la position du dernier toucher
+                toucherEcranX = x;
+                toucherEcranY = y;
+        }
+        return true;
     }
 }

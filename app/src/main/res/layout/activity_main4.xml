@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/textFinal"
-        android:layout_width="344dp"
-        android:layout_height="108dp"
+        android:layout_width="378dp"
+        android:layout_height="155dp"
         android:outlineAmbientShadowColor="#F30B0B"
         android:text="Ouups ! Vous avez touché l'obstacle"
         android:textColor="#FFFFFF"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
