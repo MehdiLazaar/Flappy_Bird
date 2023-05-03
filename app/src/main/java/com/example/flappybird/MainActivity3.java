@@ -35,15 +35,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity3 extends AppCompatActivity/* implements SensorEventListener */{
+public class MainActivity3 extends AppCompatActivity{
 
     //L'image du oiseau.
     ImageView im1, obsIm1,obsIm2;
     TextView tv4;
     private DisplayMetrics displayMetrics = new DisplayMetrics();
     Random r = new Random();
-    int obstacleHeight; // La hauteur des obstacles (constante)
-    int obstacleWidth; // La largeur des obstacles (constante)
+    //La hauteur des obstacles
+    int obstacleHeight;
+    //La largeur des obstacles
+    int obstacleWidth;
     int largeurEcran, hauteurEcran;
     float toucherEcranX, toucherEcranY;
     int amplitude = 40;
@@ -91,13 +93,13 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
 
         //On bouge les obstacles de la droite vers la gauche avec un mouvement sinusoïdal
         //On aura besoin d'une amplitude et une frequence
-        //Avec l'objet premieraAnimation on fait bouger l'obstacle superieur de la droite vers la gauche avec une translationX c-a-d sur l axe X
+        //Avec l'objet premieraAnimation on fait bouger l'obstacle superieur de la droite vers la gauche avec une translationX càd sur l axe X
         //Jusqu'a la postion (-largeurEcran) qui est l autre cote de l'écran.
-        ObjectAnimator premieraAnimation = ObjectAnimator.ofFloat(obsIm1, "translationX", -largeurEcran);
-        premieraAnimation.setDuration(dureeAnimation);
-        premieraAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        ObjectAnimator animationObsSup = ObjectAnimator.ofFloat(obsIm1, "translationX", -largeurEcran);
+        animationObsSup.setDuration(dureeAnimation);
+        animationObsSup.setRepeatCount(ValueAnimator.INFINITE);
         //Le updatListener sera appelé chaque fois que l'animation mise à jour
-        premieraAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        animationObsSup.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             boolean isTimerStarted = false;
             int timer = 0;
             Random nbrAlea1 = new Random();
@@ -112,7 +114,7 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
                 float angle = (float) (time * Math.PI * frq);
                 // Déplacement vertical de l'obstacle supérieur
                 float depVerticalObsSup = (float) (Math.sin(angle) * amplitude);
-                //Apres ce calcule, on aura un deplacement de -40 à 40 pixels
+                //Apres ce calcul, on aura un deplacement de -40 à 40 pixels
                 obsIm1.setY(obs1SupPosY + depVerticalObsSup);
 
                 if (verifierIntersectionObstacleOiseau() == true) {
@@ -136,16 +138,16 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
                             }
                         }.start();
                     }
-                    premieraAnimation.setDuration(dureeAnimation - accelereAnimation);
+                    animationObsSup.setDuration(dureeAnimation - accelereAnimation);
                 }
             }
         });
-        premieraAnimation.start();
+        animationObsSup.start();
 
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(obsIm2, "translationX", -largeurEcran);
-        anim2.setDuration(dureeAnimation);
-        anim2.setRepeatCount(ValueAnimator.INFINITE);
-        anim2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        ObjectAnimator animationObsInf = ObjectAnimator.ofFloat(obsIm2, "translationX", -largeurEcran);
+        animationObsInf.setDuration(dureeAnimation);
+        animationObsInf.setRepeatCount(ValueAnimator.INFINITE);
+        animationObsInf.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             boolean isTimerStarted = false;
             int timer = 0;
             Random nbrAlea2 = new Random();
@@ -181,17 +183,17 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
                             }
                         }.start();
                     }
-                    anim2.setDuration(dureeAnimation - accelereAnimation2);
+                    animationObsInf.setDuration(dureeAnimation - accelereAnimation2);
                 }
             }
         });
-        anim2.start();
+        animationObsInf.start();
     }
     public void demarrerAnimations() {
-        ObjectAnimator anim1 = ObjectAnimator.ofFloat(obsIm1, "translationX", -obstacleWidth);
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(obsIm2, "translationX", -obstacleWidth);
+        ObjectAnimator animationObsSup = ObjectAnimator.ofFloat(obsIm1, "translationX", -obstacleWidth);
+        ObjectAnimator animationObsInf = ObjectAnimator.ofFloat(obsIm2, "translationX", -obstacleWidth);
         // Listener pour l obstacle du top
-        anim1.addListener(new AnimatorListenerAdapter() {
+        animationObsSup.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 placerObstacles();
@@ -199,15 +201,15 @@ public class MainActivity3 extends AppCompatActivity/* implements SensorEventLis
         });
 
         // Listener pour l obstacle inferieur
-        anim2.addListener(new AnimatorListenerAdapter() {
+        animationObsInf.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 //Le Listener de l'écouteur superieur prend le relais
             }
         });
         //Demarrer les animations
-        anim1.start();
-        anim2.start();
+        animationObsSup.start();
+        animationObsInf.start();
     }
     public boolean verifierIntersectionObstacleOiseau() {
         if (intersectionObsOiseau(obsIm1)||intersectionObsOiseau(obsIm2)) {
