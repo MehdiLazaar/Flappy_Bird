@@ -20,12 +20,16 @@ public class MainActivity extends AppCompatActivity {
         tv1 = findViewById(R.id.tv1);
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finishAffinity();
+            }
+        });
     }
     public void jeu(View view) {
         Intent versAutreActivite2 = new Intent(MainActivity.this,MainActivity2.class);
         startActivity(versAutreActivite2);
-    }
-    public void done(View view){
-        finish();
     }
 }

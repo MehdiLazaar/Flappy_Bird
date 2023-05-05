@@ -50,8 +50,8 @@ public class MainActivity2 extends AppCompatActivity{
     int obstacleWidth;
     int largeurEcran, hauteurEcran;
     float toucherEcranX, toucherEcranY;
-    int amplitude = 40;
     float frq = (2f / 3f);
+    Random amp = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +79,7 @@ public class MainActivity2 extends AppCompatActivity{
     private void placerObstacles() {
         //Position de l'obstacle supérieur en Y
         int obs1SupPosY = 0;
-        int gapEntreObstacles = 380;
+        int gapEntreObstacles = im1.getHeight() + 180;
         // Position de l'obstacle inférieur en Y
         int obs2InfPosY = obs1SupPosY + obsIm1.getHeight() + gapEntreObstacles;
 
@@ -94,7 +94,6 @@ public class MainActivity2 extends AppCompatActivity{
 
         obsIm2.setY(obs2InfPosY);
         obsIm2.setX(largeurEcran);
-        boolean isTimerStarted = false;
 
         //On bouge les obstacles de la droite vers la gauche avec un mouvement sinusoïdal
         //On aura besoin d'une amplitude et une frequence
@@ -110,15 +109,15 @@ public class MainActivity2 extends AppCompatActivity{
             Random nbrAlea1 = new Random();
             //Pour avoir un nombre aleatoire en -400 et 699
             int accelereAnimation = nbrAlea1.nextInt(1100) - 400;
+            int amplitude1 = amp.nextInt(61) + 40;
 
             //Le onAnimationUpdate sera utilisé pour mettre a jour la position de l'obstacle superieur sur l'axe Y
-            //Amplitude = 40
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float time = (float) animation.getCurrentPlayTime() / 1000f;
                 float angle = (float) (time * Math.PI * frq);
                 // Déplacement vertical de l'obstacle supérieur
-                float depVerticalObsSup = (float) (Math.sin(angle) * amplitude);
+                float depVerticalObsSup = (float) (Math.sin(angle) * amplitude1);
                 //Apres ce calcul, on aura un deplacement de -40 à 40 pixels
                 obsIm1.setY(obs1SupPosY + depVerticalObsSup);
 
@@ -126,6 +125,7 @@ public class MainActivity2 extends AppCompatActivity{
                     //mediaPlayer.start();
                     Intent terminer = new Intent(MainActivity2.this, MainActivity3.class);
                     terminer.putExtra("timer", timer);
+                    animationObsSup.cancel();
                     startActivity(terminer);
                     //mediaPlayer.stop();
                 } else {
@@ -160,18 +160,20 @@ public class MainActivity2 extends AppCompatActivity{
             Random nbrAlea2 = new Random();
             //Pour avoir un nombre aleatoire en -500 et 499
             int accelereAnimation2 = nbrAlea2.nextInt(1000) - 500;
+            int amplitude2 = amp.nextInt(40) + 100;
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float time = (float) animation.getCurrentPlayTime() / 1000f;
                 float angle = (float) (time * Math.PI * frq);
                 // Déplacement vertical de l'obstacle inférieur
-                float depVerticalObsInf = (float) (Math.sin(angle) * amplitude);
+                float depVerticalObsInf = (float) (Math.sin(angle) * amplitude2);
                 //Apres ce calcule, on aura un deplacement de -40 à 40 pixels
                 obsIm2.setY(obs2InfPosY + depVerticalObsInf);
 
                 if (verifierIntersectionObstacleOiseau() == true) {
                     Intent terminer = new Intent(MainActivity2.this, MainActivity3.class);
                     terminer.putExtra("timer", timer);
+                    animationObsInf.cancel();
                     startActivity(terminer);
                 } else {
                     if (!isTimerStarted && obsIm1.getX() < im1.getX()) {
