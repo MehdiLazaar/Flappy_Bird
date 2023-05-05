@@ -7,46 +7,49 @@
     android:background="@drawable/background"
     tools:context=".MainActivity2">
 
+    <ImageView
+        android:id="@+id/im1"
+        android:layout_width="60dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="340dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.941"
+        app:srcCompat="@drawable/bird" />
+
     <TextView
-        android:id="@+id/tv3"
+        android:id="@+id/tv4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome !"
-        android:textColor="@color/white"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="Timer :"
+        android:textColor="@color/black"
         android:textSize="24sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/obsIm1"
+        android:layout_width="227dp"
+        android:layout_height="301dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.165" />
+        app:srcCompat="@drawable/obstacle02" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="118dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="152dp"
-        android:layout_marginEnd="141dp"
-        android:layout_marginBottom="312dp"
-        android:onClick="done"
-        android:text="Exit"
+    <ImageView
+        android:id="@+id/obsIm2"
+        android:layout_width="217dp"
+        android:layout_height="316dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="122dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="292dp"
-        android:layout_marginEnd="144dp"
-        android:onClick="jeu"
-        android:text="Start"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/obstacle01" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

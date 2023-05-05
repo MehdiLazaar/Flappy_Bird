@@ -4,35 +4,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button1;
-    private EditText input1;
+
+    TextView tv1;
+    Button button1, button2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button1 = findViewById(R.id.button4);
-        input1 = findViewById(R.id.input1);
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = input1.getText().toString();
-                if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(MainActivity.this, "Veuillez entrer votre nom", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent versAutreActivite = new Intent(MainActivity.this, MainActivity2.class);
-                    versAutreActivite.putExtra("mon_nom", name);
-                    startActivity(versAutreActivite);
-                }
-            }
-        });
+        tv1 = findViewById(R.id.tv1);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+    }
+    public void jeu(View view) {
+        Intent versAutreActivite2 = new Intent(MainActivity.this,MainActivity2.class);
+        startActivity(versAutreActivite2);
+    }
+    public void done(View view){
+        finish();
     }
 }

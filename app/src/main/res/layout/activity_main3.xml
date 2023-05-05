@@ -7,49 +7,33 @@
     android:background="@drawable/background"
     tools:context=".MainActivity3">
 
-    <ImageView
-        android:id="@+id/im1"
-        android:layout_width="60dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="340dp"
+    <TextView
+        android:id="@+id/textFinal"
+        android:layout_width="378dp"
+        android:layout_height="155dp"
+        android:outlineAmbientShadowColor="#F30B0B"
+        android:text="Ouups ! Vous avez touché l'obstacle"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.941"
-        app:srcCompat="@drawable/bird" />
+        app:layout_constraintVertical_bias="0.293" />
 
-    <TextView
-        android:id="@+id/tv4"
+    <Button
+        android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:text="Timer :"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/obsIm1"
-        android:layout_width="227dp"
-        android:layout_height="301dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/obstacle02" />
-
-    <ImageView
-        android:id="@+id/obsIm2"
-        android:layout_width="217dp"
-        android:layout_height="316dp"
-        android:visibility="visible"
+        android:layout_marginStart="127dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="268dp"
+        android:onClick="retournerVersJeu"
+        android:text="New Game !!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/obstacle01" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
